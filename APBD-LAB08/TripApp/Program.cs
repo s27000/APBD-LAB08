@@ -1,5 +1,7 @@
 
 using System.Data.SqlClient;
+using TripApp.Repositories;
+using TripApp.Services;
 
 namespace TripApp
 {
@@ -15,6 +17,19 @@ namespace TripApp
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ITripRepository, TripRepository>();
+            builder.Services.AddScoped<ITripService, TripService>();
+            builder.Services.AddScoped<SqlConnection>(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetConnectionString("DefaultConnection")!;
+                return new SqlConnection(connectionString);
+            });
+            builder.Services.AddScoped<IUnitOfWork>(sp =>
+            {
+                var sqlConnection = sp.GetRequiredService<SqlConnection>();
+                return new UnitOfWork(sqlConnection);
+            });
 
             var app = builder.Build();
 
