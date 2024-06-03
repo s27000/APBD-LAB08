@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TripApp.Model;
+using TripApp.Repositories;
 using TripApp.Services;
 
 namespace TripApp.Controllers
@@ -48,6 +49,33 @@ namespace TripApp.Controllers
             };
 
             return Ok(tripPage);
+        }
+
+        [HttpDelete("clients/{idClient:int}")]
+        public async Task<IActionResult> DeleteClient(int idClient, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _tripService.DeleteClient(idClient, cancellationToken);
+                return Ok("Client has been deleted");
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("trips/{idTrip:int}/clients")]
+        public async Task<IActionResult> AssignClientToTrip(int idTrip, RequestClientAssignment requestClientAssignment, CancellationToken cancellationToken)
+        {
+            try
+            { 
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ namespace TripApp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ITripRepository, TripRepository>();
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<ITripService, TripService>();
             builder.Services.AddScoped<SqlConnection>(sp =>
             {
