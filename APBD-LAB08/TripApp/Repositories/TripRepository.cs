@@ -81,7 +81,6 @@ namespace TripApp.Repositories
             }
             dr.Close();
 
-
             foreach(var idTrip in tripsMap.Keys)
             {
                 tripsMap[idTrip].Clients = GetClientList(idTrip);

@@ -10,10 +10,11 @@ namespace TripApp.Services
         private readonly ITripRepository _tripRepository;
         private readonly IClientRepository _clientRepository;
 
-        public TripService(IUnitOfWork unitOfWork, ITripRepository tripRepository)
+        public TripService(IUnitOfWork unitOfWork, ITripRepository tripRepository, IClientRepository clientRepository)
         {
             _unitOfWork = unitOfWork;
             _tripRepository = tripRepository;
+            _clientRepository = clientRepository;
         }
 
         public async Task DeleteClient(int idClient, CancellationToken cancellationToken)
