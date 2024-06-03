@@ -69,8 +69,9 @@ namespace TripApp.Controllers
         public async Task<IActionResult> AssignClientToTrip(int idTrip, RequestClientAssignment requestClientAssignment, CancellationToken cancellationToken)
         {
             try
-            { 
-                return Ok();
+            {
+                await _tripService.AssignClientToTrip(idTrip, requestClientAssignment, cancellationToken);
+                return Ok("Client has been assigned to Trip");
             }
             catch(Exception e)
             {

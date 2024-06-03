@@ -1,4 +1,5 @@
-﻿using TripApp.Model;
+﻿using System.Net.Sockets;
+using TripApp.Model;
 using TripApp.Repositories;
 
 namespace TripApp.Services
@@ -15,6 +16,22 @@ namespace TripApp.Services
             _unitOfWork = unitOfWork;
             _tripRepository = tripRepository;
             _clientRepository = clientRepository;
+        }
+
+        public async Task AssignClientToTrip(int idTrip, RequestClientAssignment requestClientAssignment, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _unitOfWork.InitializeAsync(cancellationToken);
+
+                await _clientRepository.AssignClientToTrip(idTrip, requestClientAssignment, cancellationToken);
+
+                await _unitOfWork.CommitAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task DeleteClient(int idClient, CancellationToken cancellationToken)
